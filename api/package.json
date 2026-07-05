@@ -1,13 +1,10 @@
 {
-  "name": "api",
+  "name": "jam-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend API for Jam",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "echo 'Backend Shell Initialized Successfully! Waiting for Express code...' && sleep infinity"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "dependencies": {}
 }

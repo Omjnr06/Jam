@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Redis Cache
+  redis:
+    image: redis:alpine
+    container_name: jam-redis
+    ports:
+      - "6379:6379" 
+    networks:
+      - jam-network
+
+  # API
+  api:
+    build:
+      context: ./api     
+      dockerfile: Dockerfile
+    container_name: jam-api
+    ports:
+      - "4000:4000"      
+    volumes:
+      - ./api:/app       
+      - /app/node_modules
+    environment:
+      - PORT=4000
+      - NODE_ENV=development
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+# api needs redis container to run first
+    depends_on:
+      - redis            
+    networks:
+      - jam-network
+
+# internal network for containers to talk
+networks:
+  jam-network:
+    driver: bridge
