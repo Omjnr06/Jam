@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# Mac/Linux system files
+.DS_Store
+*~
+
+# Environment variables
+.env
+
+# Expo/React Native build folders
+.expo/
+dist/
