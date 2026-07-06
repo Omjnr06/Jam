@@ -2,9 +2,19 @@
   "name": "jam-api",
   "version": "1.0.0",
   "description": "Backend API for Jam",
-  "main": "server.js",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "echo 'Backend Shell Initialized Successfully! Waiting for Express code...' && sleep infinity"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@apollo/server": "^5.5.1",
+    "graphql": "^16.14.2",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "@types/pg": "^8.20.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.3"
+  }
 }
