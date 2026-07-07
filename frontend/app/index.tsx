@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { FontAwesome5 } from '@expo/vector-icons';
-import SpinningLogo from '../components/SpinningLogo'; // Import your new component!
+import SpinningLogo from '../components/SpinningLogo'; 
+import { router } from 'expo-router';
 
 export default function SmartLoginScreen() {
   const [isBooting, setIsBooting] = useState(true);
 
   useEffect(() => {
-    // We only keep the boot-up timer here since it controls the UI reveal
     const authCheck = setTimeout(() => {
       setIsBooting(false); 
     }, 2500);
@@ -40,7 +40,7 @@ export default function SmartLoginScreen() {
 
           <Text style={styles.orText}>OR</Text>
 
-          <TouchableOpacity style={styles.emailBtn}>
+          <TouchableOpacity style={styles.emailBtn} onPress={() => router.push('/(auth)/email')}>
             <FontAwesome5 name="envelope" size={20} color="#412D15" />
             <Text style={styles.btnTextDark}>Sign in with Email</Text>
           </TouchableOpacity>

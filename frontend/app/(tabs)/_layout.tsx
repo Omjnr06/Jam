@@ -1,7 +1,7 @@
 import { SymbolView } from 'expo-symbols';
 import { Link, Tabs } from 'expo-router';
 import { Platform, Pressable } from 'react-native';
-
+import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
@@ -9,79 +9,49 @@ import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="hub"
-        options={{
-          title: 'Hub',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="three"
-        options={{
-          title: 'Tab Three',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+      <Tabs
+    screenOptions={{
+      tabBarActiveTintColor: '#412D15', 
+      tabBarInactiveTintColor: '#A9A197', 
+      tabBarStyle: {
+        backgroundColor: '#FFFFFF',
+        borderTopWidth: 1,
+        borderTopColor: '#E1DCC9',
+      },
+      headerShown: false, 
+    }}>
+    
+    <Tabs.Screen
+      name="hub"
+      options={{
+        title: 'The Hub',
+        tabBarIcon: ({ color }) => <FontAwesome5 name="globe-americas" size={24} color={color} />,
+      }}
+    />
+    
+    <Tabs.Screen
+      name="addPost"
+      options={{
+        title: 'Add Post',
+        tabBarIcon: ({ color }) => <FontAwesome5 name="plus" size={24} color={color} />,
+      }}
+    />
+    
+    <Tabs.Screen
+      name="inbox"
+      options={{
+        title: 'Messages',
+        tabBarIcon: ({ color }) => <FontAwesome5 name="comment-alt" size={24} color={color} />,
+      }}
+    />
+    
+    <Tabs.Screen
+      name="portfolio" 
+      options={{
+        title: 'Portfolio',
+        tabBarIcon: ({ color }) => <FontAwesome5 name="play-circle" size={24} color={color} />,
+      }}
+    />
+  </Tabs>
   );
 }
