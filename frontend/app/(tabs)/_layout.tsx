@@ -8,7 +8,6 @@ import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
@@ -18,9 +17,9 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="index"
+        name="hub"
         options={{
-          title: 'Tab One',
+          title: 'Hub',
           tabBarIcon: ({ color }) => (
             <SymbolView
               name={{
@@ -52,6 +51,24 @@ export default function TabLayout() {
         name="two"
         options={{
           title: 'Tab Two',
+          tabBarIcon: ({ color }) => (
+            <SymbolView
+              name={{
+                ios: 'chevron.left.forwardslash.chevron.right',
+                android: 'code',
+                web: 'code',
+              }}
+              tintColor={color}
+              size={28}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="three"
+        options={{
+          title: 'Tab Three',
           tabBarIcon: ({ color }) => (
             <SymbolView
               name={{

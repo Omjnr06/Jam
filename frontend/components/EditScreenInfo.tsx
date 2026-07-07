@@ -49,28 +49,35 @@ const styles = StyleSheet.create({
   getStartedContainer: {
     alignItems: 'center',
     marginHorizontal: 50,
+    fontFamily:'Bitcount',
   },
   homeScreenFilename: {
     marginVertical: 7,
+    fontFamily:'Bitcount',
   },
   codeHighlightContainer: {
     borderRadius: 3,
     paddingHorizontal: 4,
+    fontFamily:'Bitcount',
   },
   getStartedText: {
     fontSize: 17,
     lineHeight: 24,
     textAlign: 'center',
+    fontFamily:'Bitcount',
   },
   helpContainer: {
     marginTop: 15,
     marginHorizontal: 20,
     alignItems: 'center',
+    fontFamily:'Bitcount',
   },
   helpLink: {
     paddingVertical: 15,
+    fontFamily:'Bitcount',
   },
   helpLinkText: {
     textAlign: 'center',
+    fontFamily:'Bitcount',
   },
 });
