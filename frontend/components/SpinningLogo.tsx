@@ -6,11 +6,12 @@ import Animated, {
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Music, Drum, MicVocal, Guitar, Disc3, Headphones } from 'lucide-react-native';
+import { useThemeStore } from '@/store/useThemeStore';
 
 const NUM_ICONS = 6;
 const RADIUS = 110;
-const ICONS = ['music', 'drum', 'microphone-alt', 'guitar', 'record-vinyl', 'headphones'];
+const ICONS = [Music, Drum, MicVocal, Guitar, Disc3, Headphones];
 
 interface SpinningLogoProps {
   scale?: number;
@@ -19,6 +20,7 @@ interface SpinningLogoProps {
 }
 
 export default function SpinningLogo({ scale = 1, speed = 800, children }: SpinningLogoProps) {
+  const { theme } = useThemeStore();
   const step = useSharedValue(0);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function SpinningLogo({ scale = 1, speed = 800, children }: Spinn
     <View style={[styles.orbitContainer, { transform: [{ scale }] }]}>
       {children}
       
-      {ICONS.map((icon, index) => {
+      {ICONS.map((IconComponent, index) => {
         const offsetAngle = ((2 * Math.PI) / NUM_ICONS) * index;
 
         const animatedOrbitStyle = useAnimatedStyle(() => {
@@ -51,7 +53,7 @@ export default function SpinningLogo({ scale = 1, speed = 800, children }: Spinn
 
         return (
           <Animated.View key={index} style={[styles.iconWrapper, animatedOrbitStyle]}>
-            <FontAwesome5 name={icon} size={32} color="#412D15" />
+            <IconComponent size={32} color={theme.textPrimary} />
           </Animated.View>
         );
       })}

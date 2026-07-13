@@ -1,30 +1,43 @@
-import { StyleSheet } from 'react-native';
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import React, { useMemo } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { useThemeStore } from '@/store/useThemeStore';
+import { Theme } from '@/constants/theme';
 
-export default function TabThreeScreen() {
+export default function AddPostScreen() {
+  const { theme } = useThemeStore();
+  const styles = useMemo(() => getStyles(theme), [theme]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Three</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+      <Text style={styles.title}>Add Post</Text>
+      <View style={styles.separator} />
+      <Text style={styles.subText}>Coming soon.</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme: Theme) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: theme.background,
   },
   title: {
+    fontFamily: 'Bitcount',
     fontSize: 20,
     fontWeight: 'bold',
+    color: theme.textPrimary,
   },
   separator: {
     marginVertical: 30,
     height: 1,
     width: '80%',
+    backgroundColor: theme.accent,
+  },
+  subText: {
+    fontFamily: 'Inter',
+    fontSize: 14,
+    color: theme.textSecondary,
   },
 });

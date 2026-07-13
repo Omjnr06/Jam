@@ -2,21 +2,20 @@ import { SymbolView } from 'expo-symbols';
 import { Link, Tabs } from 'expo-router';
 import { Platform, Pressable } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
+import { useThemeStore } from '@/store/useThemeStore';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { theme } = useThemeStore();
   return (
       <Tabs
     screenOptions={{
-      tabBarActiveTintColor: '#412D15', 
-      tabBarInactiveTintColor: '#A9A197', 
+      tabBarActiveTintColor: theme.textPrimary, 
+      tabBarInactiveTintColor: theme.textSecondary, 
       tabBarStyle: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: theme.background,
         borderTopWidth: 1,
-        borderTopColor: '#E1DCC9',
+        borderTopColor: theme.accent,
       },
       headerShown: false, 
     }}>

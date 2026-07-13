@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import SpinningLogo from '../../components/SpinningLogo';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useThemeStore } from '@/store/useThemeStore';
+import { Theme } from '@/constants/theme';
 
 // mock data (removed when backend is set up)
 // need to change icon useage, fontawesome free tier does not include pianos
@@ -26,8 +28,20 @@ const SEEKING_BANDMATES = [
   { id: '9', name: 'Elena', instrument: 'piano', tags: ['#Needs Bassist', '#Studio'], image: 'https://images.unsplash.com/photo-1525362081669-2b476bb628c3?w=400&q=80' },
 ];
 
+interface ArtistCardProps {
+  artist: {
+    id: string;
+    name: string;
+    instrument: string;
+    tags: string[];
+    image: string;
+  };
+  theme: Theme;
+  styles: ReturnType<typeof getStyles>;
+}
+
 // video card
-const ArtistCard = ({ artist }) => (
+const ArtistCard = ({ artist, theme, styles }: ArtistCardProps) => (
   <TouchableOpacity style={styles.cardContainer}>
     <View style={styles.thumbnailContainer}>
       <Image source={{ uri: artist.image }} style={styles.artistImage} />
@@ -39,7 +53,7 @@ const ArtistCard = ({ artist }) => (
     
     <View style={styles.cardHeader}>
       <Text style={styles.artistName}>{artist.name}</Text>
-      <FontAwesome5 name={artist.instrument} size={16} color="#412D15" />
+      <FontAwesome5 name={artist.instrument} size={16} color={theme.textPrimary} />
     </View>
 
     <View style={styles.tagRow}>
@@ -53,6 +67,9 @@ const ArtistCard = ({ artist }) => (
 );
 
 export default function HubScreen() {
+  const { theme } = useThemeStore();
+  const styles = useMemo(() => getStyles(theme), [theme]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -61,16 +78,16 @@ export default function HubScreen() {
           
           <View style={styles.avatarWrapper}>
             <SpinningLogo scale={0.4} speed={1200}>
-              <FontAwesome5 name="user-circle" size={80} color="#412D15" solid />
+              <FontAwesome5 name="user-circle" size={80} color={theme.textPrimary} solid />
             </SpinningLogo>
           </View>
         </View>
         <View style={styles.searchBar}>
-          <FontAwesome5 name="search" size={14} color="#412D15" />
+          <FontAwesome5 name="search" size={14} color={theme.textPrimary} />
           <TextInput 
             style={styles.searchInput}
             placeholder="SEARCH FOR TAGS, LOCATIONS..."
-            placeholderTextColor="#A9A197"
+            placeholderTextColor={theme.textSecondary}
           />
         </View>
       </View>
@@ -84,7 +101,7 @@ export default function HubScreen() {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
-          renderItem={({ item }) => <ArtistCard artist={item} />}
+          renderItem={({ item }) => <ArtistCard artist={item} theme={theme} styles={styles} />}
         />
 
         <Text style={styles.sectionTitle}>Local To You</Text>
@@ -94,7 +111,7 @@ export default function HubScreen() {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
-          renderItem={({ item }) => <ArtistCard artist={item} />}
+          renderItem={({ item }) => <ArtistCard artist={item} theme={theme} styles={styles} />}
         />
 
         <Text style={styles.sectionTitle}>Seeking Bandmates</Text>
@@ -104,7 +121,7 @@ export default function HubScreen() {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
-          renderItem={({ item }) => <ArtistCard artist={item} />}
+          renderItem={({ item }) => <ArtistCard artist={item} theme={theme} styles={styles} />}
         />
 
         <Text style={styles.sectionTitle}>Recommended</Text>
@@ -114,7 +131,7 @@ export default function HubScreen() {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id}
           contentContainerStyle={[styles.listContent, { paddingBottom: 40 }]}
-          renderItem={({ item }) => <ArtistCard artist={item} />}
+          renderItem={({ item }) => <ArtistCard artist={item} theme={theme} styles={styles} />}
         />
 
       </ScrollView>
@@ -122,10 +139,10 @@ export default function HubScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme: Theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.background,
     paddingTop: 55, 
   },
   header: {
@@ -141,7 +158,7 @@ const styles = StyleSheet.create({
   logoText: {
     fontFamily: 'Bitcount',
     fontSize: 48,
-    color: '#412D15',
+    color: theme.textPrimary,
   },
   avatarWrapper: {
     width: 85, 
@@ -151,7 +168,7 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     flexDirection: 'row',
-    backgroundColor: '#F5F3ED', 
+    backgroundColor: theme.surface, 
     borderRadius: 12,
     paddingHorizontal: 15,
     paddingVertical: 14,
@@ -159,14 +176,14 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 5, 
     borderWidth: 1,
-    borderColor: '#E1DCC9',
+    borderColor: theme.accent,
   },
   searchInput: {
     fontFamily: 'Bitcount',
     fontSize: 12,
     marginLeft: 10,
     flex: 1,
-    color: '#412D15',
+    color: theme.textPrimary,
   },
   feed: {
     flex: 1,
@@ -174,7 +191,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: 'Bitcount',
     fontSize: 24,
-    color: '#412D15',
+    color: theme.textPrimary,
     marginLeft: 20,
     marginBottom: 15,
     marginTop: 20, 
@@ -217,7 +234,7 @@ const styles = StyleSheet.create({
   artistName: {
     fontFamily: 'Bitcount',
     fontSize: 20,
-    color: '#412D15',
+    color: theme.textPrimary,
     marginRight: 10,
   },
   tagRow: {
@@ -226,14 +243,14 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   tagBadge: {
-    backgroundColor: '#412D15',
+    backgroundColor: theme.primary,
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderRadius: 8,
   },
   tagText: {
     fontFamily: 'Inter',
-    color: '#E1DCC9',
+    color: theme.accent,
     fontSize: 10,
     fontWeight: 'bold',
   }

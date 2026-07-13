@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { router } from 'expo-router';
 import { FontAwesome5 } from '@expo/vector-icons';
 import SpinningLogo from '@/components/SpinningLogo'; 
+import { useThemeStore } from '@/store/useThemeStore';
+import { Theme } from '@/constants/theme';
 
 export default function ForgotPasswordScreen() {
+  const { theme } = useThemeStore();
+  const styles = useMemo(() => getStyles(theme), [theme]);
   const [email, setEmail] = useState('');
   const [isSent, setIsSent] = useState(false);
 
@@ -19,7 +23,7 @@ export default function ForgotPasswordScreen() {
       style={styles.container}
     >
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <FontAwesome5 name="arrow-left" size={20} color="#412D15" />
+        <FontAwesome5 name="arrow-left" size={20} color={theme.textPrimary} />
       </TouchableOpacity>
 
         <View style={styles.logoWrapper}>
@@ -40,7 +44,7 @@ export default function ForgotPasswordScreen() {
               <TextInput
                 style={styles.input}
                 placeholder="artist@studio.com"
-                placeholderTextColor="#A9A197"
+                placeholderTextColor={theme.textSecondary}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 value={email}
@@ -54,7 +58,7 @@ export default function ForgotPasswordScreen() {
           </>
         ) : (
           <View style={styles.successState}>
-            <FontAwesome5 name="check-circle" size={48} color="#412D15" style={styles.successIcon} />
+            <FontAwesome5 name="check-circle" size={48} color={theme.textPrimary} style={styles.successIcon} />
             <Text style={styles.successText}>Link sent!</Text>
             <Text style={styles.subText}>Check your inbox for the reset instructions.</Text>
             
@@ -68,10 +72,10 @@ export default function ForgotPasswordScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme: Theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: theme.background,
   },
   backButton: {
     marginTop: 60,
@@ -88,13 +92,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: 'Bitcount',
     fontSize: 48,
-    color: '#412D15',
+    color: theme.textPrimary,
     marginBottom: 8,
   },
   subText: {
     fontFamily: 'Inter',
     fontSize: 16,
-    color: '#412D15',
+    color: theme.textPrimary,
     marginBottom: 40,
     lineHeight: 24,
   },
@@ -104,23 +108,23 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: 'Bitcount',
     fontSize: 14,
-    color: '#412D15',
+    color: theme.textPrimary,
     marginBottom: 8,
     letterSpacing: 1,
   },
   input: {
     fontFamily: 'Inter',
     fontSize: 16,
-    backgroundColor: '#F5F3ED', 
-    color: '#412D15',
+    backgroundColor: theme.surface, 
+    color: theme.textPrimary,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 18,
     borderWidth: 1,
-    borderColor: '#E1DCC9',
+    borderColor: theme.accent,
   },
   actionBtn: {
-    backgroundColor: '#412D15',
+    backgroundColor: theme.primary,
     paddingVertical: 18,
     borderRadius: 30,
     alignItems: 'center',
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
   },
   btnTextLight: {
     fontFamily: 'Bitcount',
-    color: '#E1DCC9',
+    color: theme.accent,
     fontSize: 18,
   },
   successState: {
@@ -140,11 +144,11 @@ const styles = StyleSheet.create({
   successText: {
     fontFamily: 'Bitcount',
     fontSize: 24,
-    color: '#412D15',
+    color: theme.textPrimary,
     marginBottom: 10,
   },
   returnBtn: {
-    backgroundColor: '#E1DCC9', 
+    backgroundColor: theme.accent, 
     paddingVertical: 18,
     paddingHorizontal: 30,
     borderRadius: 30,
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
   },
   btnTextDark: {
     fontFamily: 'Bitcount',
-    color: '#412D15',
+    color: theme.textPrimary,
     fontSize: 18,
   },
   logoWrapper: {
@@ -165,7 +169,7 @@ const styles = StyleSheet.create({
   jamText: {
     fontFamily: 'Bitcount', 
     fontSize: 48,
-    color: '#412D15',
+    color: theme.textPrimary,
     letterSpacing: 2,
   },
 });

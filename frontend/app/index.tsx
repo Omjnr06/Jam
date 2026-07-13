@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { Mail } from 'lucide-react-native'; 
 import SpinningLogo from '../components/SpinningLogo'; 
 import { router } from 'expo-router';
+import { useThemeStore } from '@/store/useThemeStore';
+import { Theme } from '@/constants/theme';
 
 export default function SmartLoginScreen() {
+  const { theme, toggleTheme } = useThemeStore();
+  const styles = getStyles(theme);
   const [isBooting, setIsBooting] = useState(true);
 
   useEffect(() => {
     const authCheck = setTimeout(() => {
       setIsBooting(false); 
     }, 2500);
-
     return () => clearTimeout(authCheck);
   }, []);
 
   return (
     <View style={styles.container}>
-  
-    <View style={styles.logoWrapper}>
-      <SpinningLogo scale={1} speed={800}>
-        <Text style={styles.jamText}>JAM</Text> 
-      </SpinningLogo>
-    </View>
+      <Pressable style={styles.logoWrapper} onPress={toggleTheme}>
+        <SpinningLogo scale={1} speed={800}>
+          <Text style={styles.jamText}>JAM</Text> 
+        </SpinningLogo>
+      </Pressable>
 
       {!isBooting && (
         <Animated.View entering={FadeIn.duration(800)} style={styles.authContainer}>
@@ -33,33 +36,49 @@ export default function SmartLoginScreen() {
             <Text style={styles.tagline}>Jam.</Text>
           </View>
 
+          {/* Google Sign Up */}
           <TouchableOpacity style={styles.googleBtn}>
-            <FontAwesome5 name="google" size={20} color="#E1DCC9" />
+            <FontAwesome5 name="google" size={20} color={theme.accent} />
             <Text style={styles.btnTextLight}>Continue with Google</Text>
           </TouchableOpacity>
 
           <Text style={styles.orText}>OR</Text>
 
-          <TouchableOpacity style={styles.emailBtn} onPress={() => router.push('/(auth)/email')}>
-            <FontAwesome5 name="envelope" size={20} color="#412D15" />
-            <Text style={styles.btnTextDark}>Sign in with Email</Text>
+          {/* Email Sign Up */}
+          <TouchableOpacity style={styles.emailBtn} onPress={() => router.push('/(auth)/signup')}>
+            <Mail size={20} color={theme.textPrimary} />
+            <Text style={styles.btnTextDark}>Sign up with Email</Text>
           </TouchableOpacity>
+
+          {/* Log In */}
+          <View style={styles.loginRow}>
+            <Text style={styles.mutedText}>Already have an account? </Text>
+            <TouchableOpacity onPress={() => router.push('/(auth)/email')}>
+              <Text style={styles.loginText}>Log In</Text>
+            </TouchableOpacity>
+          </View>
         </Animated.View>
       )}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (theme: Theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: theme.background, 
     alignItems: 'center',
     justifyContent: 'center',
   },
   logoWrapper: {
     marginBottom: 20,
     marginTop: 40,
+  },
+  jamText: {
+    fontFamily: 'Bitcount', 
+    fontSize: 48,
+    color: theme.textPrimary,
+    letterSpacing: 2,
   },
   authContainer: {
     alignItems: 'center',
@@ -72,13 +91,13 @@ const styles = StyleSheet.create({
   tagline: {
     fontFamily: 'Bitcount', 
     fontSize: 18,
-    color: '#412D15',
+    color: theme.textPrimary,
     marginBottom: 6,
     textAlign: 'center',
   },
   googleBtn: {
     flexDirection: 'row',
-    backgroundColor: '#412D15',
+    backgroundColor: theme.primary,
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 40,
@@ -88,7 +107,7 @@ const styles = StyleSheet.create({
   },
   emailBtn: {
     flexDirection: 'row',
-    backgroundColor: '#E1DCC9', 
+    backgroundColor: theme.accent, 
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 40,
@@ -98,14 +117,14 @@ const styles = StyleSheet.create({
   },
   btnTextLight: {
     fontFamily: 'Bitcount',
-    color: '#E1DCC9',
+    color: theme.accent,
     fontSize: 16,
     marginLeft: 14,
     marginTop: 4, 
   },
   btnTextDark: {
     fontFamily: 'Bitcount',
-    color: '#412D15',
+    color: theme.textPrimary,
     fontSize: 16,
     marginLeft: 14,
     marginTop: 4,
@@ -114,12 +133,23 @@ const styles = StyleSheet.create({
     fontFamily: 'Bitcount',
     marginVertical: 18,
     fontSize: 18,
-    color: '#412D15',
+    color: theme.textPrimary,
   },
-  jamText: {
-    fontFamily: 'Bitcount', 
-    fontSize: 48,
-    color: '#412D15',
-    letterSpacing: 2,
+  loginRow: {
+    flexDirection: 'row',
+    marginTop: 30,
+    alignItems: 'center',
   },
+  mutedText: {
+    fontFamily: 'Inter',
+    color: theme.textSecondary,
+    fontSize: 14,
+  },
+  loginText: {
+    fontFamily: 'Inter',
+    color: theme.textPrimary,
+    fontSize: 14,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  }
 });

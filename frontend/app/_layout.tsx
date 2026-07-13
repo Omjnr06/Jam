@@ -1,11 +1,11 @@
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router'; 
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'; 
+import { DarkTheme, DefaultTheme, ThemeProvider, Theme as NavigationTheme } from '@react-navigation/native'; 
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/components/useColorScheme';
+import { useThemeStore } from '@/store/useThemeStore';
 
 export {
   ErrorBoundary,
@@ -40,10 +40,24 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const { isDark, theme } = useThemeStore();
+
+  const navTheme: NavigationTheme = {
+    ...(isDark ? DarkTheme : DefaultTheme),
+    dark: isDark,
+    colors: {
+      ...(isDark ? DarkTheme.colors : DefaultTheme.colors),
+      primary: theme.primary,
+      background: theme.background,
+      card: theme.surface,
+      text: theme.textPrimary,
+      border: theme.accent,
+      notification: theme.primary,
+    },
+  };
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={navTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>

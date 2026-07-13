@@ -1,19 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { router } from 'expo-router';
-import { FontAwesome5 } from '@expo/vector-icons';
-import SpinningLogo from '@/components/SpinningLogo'; 
+import { ArrowLeft } from 'lucide-react-native';
 import { useThemeStore } from '@/store/useThemeStore';
 import { Theme } from '@/constants/theme';
 
-export default function EmailAuthScreen() {
+export default function SignUpScreen() {
   const { theme } = useThemeStore();
   const styles = useMemo(() => getStyles(theme), [theme]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFakeLogin = () => {
-    router.replace('/(tabs)/hub');
+  const handleFakeSignUp = () => {
+    // Later: Clerk create user logic goes here.
+    router.replace('/(auth)/verify-email');
   };
 
   return (
@@ -21,21 +21,13 @@ export default function EmailAuthScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-
-            <View style={styles.logoWrapper}>
-              <SpinningLogo scale={0.5} speed={800}>
-                <Text style={styles.jamText}>JAM</Text> 
-              </SpinningLogo>
-            </View>
-
-
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <FontAwesome5 name="arrow-left" size={20} color={theme.textPrimary} />
+        <ArrowLeft size={24} color={theme.textPrimary} />
       </TouchableOpacity>
 
       <View style={styles.content}>
-        <Text style={styles.headerText}>Log In.</Text>
-        <Text style={styles.subText}>Welcome back to the jam.</Text>
+        <Text style={styles.headerText}>Join.</Text>
+        <Text style={styles.subText}>Create an account to start jamming.</Text>
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>EMAIL</Text>
@@ -54,19 +46,20 @@ export default function EmailAuthScreen() {
           <Text style={styles.label}>PASSWORD</Text>
           <TextInput
             style={styles.input}
-            placeholder="••••••••"
+            placeholder="Create a secure password"
             placeholderTextColor={theme.textSecondary}
             secureTextEntry
             value={password}
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={styles.signInBtn} onPress={handleFakeLogin}>
-          <Text style={styles.btnTextLight}>Sign In</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity style={styles.forgotBtn} onPress={() => router.push('/(auth)/forgot')}>
-          <Text style={styles.forgotText}>Forgot password?</Text>
+        <TouchableOpacity 
+          style={[styles.actionBtn, (!email || !password) && { opacity: 0.5 }]} 
+          disabled={!email || !password}
+          onPress={handleFakeSignUp}
+        >
+          <Text style={styles.btnTextLight}>Create Account</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -88,7 +81,7 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     flex: 1,
     paddingHorizontal: 32,
     justifyContent: 'center',
-    paddingBottom: 60, 
+    paddingBottom: 80,
   },
   headerText: {
     fontFamily: 'Bitcount',
@@ -123,38 +116,16 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.accent,
   },
-  signInBtn: {
+  actionBtn: {
     backgroundColor: theme.primary,
     paddingVertical: 18,
     borderRadius: 30,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
   btnTextLight: {
     fontFamily: 'Bitcount',
     color: theme.accent,
     fontSize: 18,
-  },
-  forgotBtn: {
-    marginTop: 24,
-    alignItems: 'center',
-  },
-  forgotText: {
-    fontFamily: 'InterBold',
-    color: theme.textPrimary,
-    fontSize: 14,
-    textDecorationLine: 'underline',
-  },
-    logoWrapper: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-  },
-    jamText: {
-    fontFamily: 'Bitcount', 
-    fontSize: 48,
-    color: theme.textPrimary,
-    letterSpacing: 2,
-  },
-  
+  }
 });
