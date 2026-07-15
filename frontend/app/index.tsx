@@ -37,7 +37,7 @@ export default function SmartLoginScreen() {
           </View>
 
           {/* Google Sign Up */}
-          <TouchableOpacity style={styles.googleBtn}>
+          <TouchableOpacity style={styles.googleBtn} onPress={() => router.replace('/(tabs)/hub')}>
             <FontAwesome5 name="google" size={20} color={theme.accent} />
             <Text style={styles.btnTextLight}>Continue with Google</Text>
           </TouchableOpacity>

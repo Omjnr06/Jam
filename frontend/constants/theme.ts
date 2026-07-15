@@ -1,3 +1,4 @@
+// light and dark theme set.
 export const lightTheme = {
   background: '#FFFFFF',
   surface: '#F5F3ED',

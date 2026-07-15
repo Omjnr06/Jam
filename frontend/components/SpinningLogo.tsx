@@ -9,6 +9,9 @@ import Animated, {
 import { Music, Drum, MicVocal, Guitar, Disc3, Headphones } from 'lucide-react-native';
 import { useThemeStore } from '@/store/useThemeStore';
 
+
+// code for spinning logo animation
+// possibile icon package change.
 const NUM_ICONS = 6;
 const RADIUS = 110;
 const ICONS = [Music, Drum, MicVocal, Guitar, Disc3, Headphones];

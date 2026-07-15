@@ -12,6 +12,7 @@ interface ThemeState {
   setHasHydrated: (value: boolean) => void;
 }
 
+// theme store initialization
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({

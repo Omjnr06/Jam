@@ -16,27 +16,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera, ArrowRight, Check, User, Guitar, Drum, MicVocal, Headphones, Piano, Music, Search, Plus } from 'lucide-react-native';
 import { useThemeStore } from '@/store/useThemeStore';
 import { Theme } from '@/constants/theme';
+import { ALL_INSTRUMENTS, ALL_GENRES, ALL_INTENTS } from '@/constants/pickerOptions';
 
 const { width } = Dimensions.get('window');
 
-// For Dropdown menu 
-const ALL_INSTRUMENTS = [
-  'Acoustic Guitar', 'Bass Guitar', 'Cello', 'Clarinet', 'DJ', 'Drums', 
-  'Electric Guitar', 'Flute', 'Harp', 'Headphones', 'Keyboard', 'Piano', 
-  'Producer', 'Saxophone', 'Trumpet', 'Turntables', 'Violin', 'Vocals'
-];
-
-// For Dropdown menu
-const ALL_GENRES = [
-  'Acoustic', 'Alternative Rock', 'Blues', 'Classical', 'Country', 'EDM', 
-  'Electronic', 'Folk', 'Funk', 'Hip Hop', 'Indie', 'Jazz', 'K-Pop', 
-  'Metal', 'Pop', 'Punk', 'R&B', 'Rap', 'Reggae', 'Rock', 'Soul','Grunge','Bossa Nova',
-  'Afrobeats', 'Bedroom Pop', 'Shoegaze','Bluegrass', 'Samba','Salsa', 'Other', 'Lofi'
-];
-
 const INITIAL_INSTRUMENTS = ['Guitar', 'Drums', 'Vocals', 'Headphones', 'Piano'];
 const INITIAL_GENRES = ['Rock', 'Jazz', 'R&B', 'Indie', 'Metal', 'Pop', 'Funk'];
-const INTENTS = ['Bandmates', 'Jam Buddies', 'Paid Gigs', 'Networking', 'Mentorship'];
+const INTENTS = ALL_INTENTS;
 
 interface RenderIconProps {
   name: string;

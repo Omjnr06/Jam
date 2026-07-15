@@ -12,7 +12,7 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState('');
 
   const handleFakeSignUp = () => {
-    // Later: Clerk create user logic goes here.
+    // Better Auth LOgic Here
     router.replace('/(auth)/verify-email');
   };
 
