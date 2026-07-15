@@ -1,16 +1,26 @@
+// The Hub tab — main discovery screen. Header (logo, avatar, search bar)
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import SpinningLogo from '../../components/SpinningLogo';
 import { useThemeStore } from '@/store/useThemeStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import { Theme } from '@/constants/theme';
 import FeedSection from '@/components/FeedSection';
-import { HUB_SECTIONS } from '@/constants/mockHubSections';
+import { HUB_SECTIONS, getLocalSection } from '@/constants/mockHubSections';
 import { router } from 'expo-router';
 
 export default function HubScreen() {
   const { theme } = useThemeStore();
+  const photo = useProfileStore((s) => s.photo);
+  const userLocation = useProfileStore((s) => s.location);
   const styles = useMemo(() => getStyles(theme), [theme]);
+
+
+  const sections = useMemo(() => {
+    const [trending, ...rest] = HUB_SECTIONS;
+    return [trending, getLocalSection(userLocation), ...rest];
+  }, [userLocation]);
 
   return (
     <View style={styles.container}>
@@ -20,7 +30,11 @@ export default function HubScreen() {
           
           <TouchableOpacity style={styles.avatarWrapper} onPress={() => router.push('/portfolio')}>
             <SpinningLogo scale={0.4} speed={1200}>
-              <FontAwesome5 name="user-circle" size={80} color={theme.textPrimary} solid />
+              {photo ? (
+                <Image source={{ uri: photo }} style={styles.avatarImage} />
+              ) : (
+                <FontAwesome5 name="user-circle" size={80} color={theme.textPrimary} solid />
+              )}
             </SpinningLogo>
           </TouchableOpacity>
         </View>
@@ -31,14 +45,14 @@ export default function HubScreen() {
       </View>
 
       <ScrollView style={styles.feed} showsVerticalScrollIndicator={false}>
-        {HUB_SECTIONS.map((section, index) => (
+        {sections.map((section, index) => (
           <FeedSection
             key={section.contextKey}
             title={section.title}
             data={section.data}
             contextKey={section.contextKey}
             theme={theme}
-            isLast={index === HUB_SECTIONS.length - 1}
+            isLast={index === sections.length - 1}
           />
         ))}
       </ScrollView>
@@ -72,6 +86,11 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     height: 85,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  avatarImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
   },
   searchBar: {
     flexDirection: 'row',

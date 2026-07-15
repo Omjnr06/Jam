@@ -20,6 +20,7 @@ interface ProfileHeroProps {
   bio?: string;
   featuredVideoUrl: string;
   featuredCaption?: string;
+  location?: string;
   instruments?: string[];
   genres?: string[];
   primaryIntent?: string;
@@ -43,6 +44,7 @@ export default function ProfileHero({
   bio,
   featuredVideoUrl,
   featuredCaption,
+  location,
   instruments,
   genres,
   primaryIntent,
@@ -85,15 +87,14 @@ export default function ProfileHero({
         nativeControls={false}
       />
 
-{/* Vertical Gradient */}
+{/* vertical gradient */}
       <LinearGradient
-        colors={['transparent', 'rgba(2,2,2,0.55)', theme.surface]}
+        colors={['transparent', 'rgba(2,2,2,0.5)', theme.surface]}
         locations={[0, 0.5, 1]}
         style={StyleSheet.absoluteFillObject}
       />
 
-
-{/* Horizontal Gradient */}
+{/* horizontal gradient */}
       {/* <LinearGradient
         colors={['#020202', 'rgba(2,2,2,0.5)', 'transparent']}
         locations={[0, 0.5, 1]}
@@ -149,11 +150,17 @@ export default function ProfileHero({
           />
         )}
 
-        <Text style={styles.userTitle}>{isCurrentUser ? 'This Is You' : `This Is ${name}`}</Text>
+        <Text style={styles.userTitle}>This Is {name}</Text>
         {!!bio && <Text style={styles.bio}>{bio}</Text>}
 
-        {(primaryIntent || (instruments && instruments.length > 0) || (genres && genres.length > 0)) && (
+        {(location || primaryIntent || (instruments && instruments.length > 0) || (genres && genres.length > 0)) && (
           <View style={styles.identityRow}>
+            {location && (
+              <View style={styles.locationBadge}>
+                <Ionicons name="location-sharp" size={11} color="#412D15" />
+                <Text style={styles.locationBadgeText}>{location}</Text>
+              </View>
+            )}
             {primaryIntent && (
               <View style={styles.intentBadge}>
                 <Ionicons name="flag" size={10} color="#412D15" />
@@ -205,6 +212,7 @@ export default function ProfileHero({
     </View>
   );
 }
+
 
 const getStyles = (theme: Theme) => StyleSheet.create({
   container: { flex: 1, backgroundColor: '#050505' },
@@ -275,6 +283,16 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     borderRadius: 14,
   },
   intentBadgeText: { fontFamily: 'Inter', fontSize: 11, fontWeight: '700', color: '#412D15' },
+  locationBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 14,
+  },
+  locationBadgeText: { fontFamily: 'Inter', fontSize: 11, fontWeight: '700', color: '#412D15' },
   identityBadge: {
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.4)',

@@ -1,3 +1,4 @@
+// "Your Network" — a grid of everyone with an accepted Jam Request.
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';

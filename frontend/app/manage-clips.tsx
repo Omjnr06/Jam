@@ -15,21 +15,23 @@ import {
 import { router } from 'expo-router';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useThemeStore } from '@/store/useThemeStore';
-import { useFeaturedClipStore } from '@/store/useFeaturedClipStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import { Theme } from '@/constants/theme';
-import { MOCK_MY_CLIPS, MyClip } from '@/constants/mockMyClips';
+import { PersonClip } from '@/constants/mockPeople';
 
 export default function ManageClipsScreen() {
   const { theme } = useThemeStore();
   const styles = useMemo(() => getStyles(theme), [theme]);
-  const { featuredClipId, setFeaturedClip } = useFeaturedClipStore();
-  const [clips, setClips] = useState<MyClip[]>(MOCK_MY_CLIPS);
-  const [editingClip, setEditingClip] = useState<MyClip | null>(null);
+  const clips = useProfileStore((s) => s.clips);
+  const setClips = useProfileStore((s) => s.setClips);
+  const featuredClipId = useProfileStore((s) => s.featuredClipId);
+  const setFeaturedClip = useProfileStore((s) => s.setFeaturedClip);
+  const [editingClip, setEditingClip] = useState<PersonClip | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
   const [editTags, setEditTags] = useState('');
 
-  const openEdit = (clip: MyClip) => {
+  const openEdit = (clip: PersonClip) => {
     setEditingClip(clip);
     setEditTitle(clip.title);
     setEditDescription(clip.description ?? '');
@@ -38,8 +40,8 @@ export default function ManageClipsScreen() {
 
   const saveEdit = () => {
     if (!editingClip) return;
-    setClips((prev) =>
-      prev.map((c) =>
+    setClips(
+      clips.map((c) =>
         c.id === editingClip.id
           ? {
               ...c,
@@ -53,10 +55,10 @@ export default function ManageClipsScreen() {
     setEditingClip(null);
   };
 
-  const handleDelete = (clip: MyClip) => {
+  const handleDelete = (clip: PersonClip) => {
     Alert.alert('Delete Clip', `Delete "${clip.title}"? This can't be undone.`, [
       { text: 'Cancel', style: 'cancel' },
-      { text: 'Delete', style: 'destructive', onPress: () => setClips((prev) => prev.filter((c) => c.id !== clip.id)) },
+      { text: 'Delete', style: 'destructive', onPress: () => setClips(clips.filter((c) => c.id !== clip.id)) },
     ]);
   };
 

@@ -71,6 +71,7 @@ const PlayerVideoItem = ({ item, isActive, isPaused, isScreenFocused, styles, on
             player.currentTime = dragProgressRef.current * player.duration;
           }
         } catch (e) {
+
         }
         setIsDragging(false);
       },
@@ -89,7 +90,7 @@ const PlayerVideoItem = ({ item, isActive, isPaused, isScreenFocused, styles, on
         player.pause();
       }
     } catch (e) {
-      
+
     }
   }, [isActive, isPaused, isScreenFocused, isManuallyPaused, player]);
 
@@ -105,6 +106,7 @@ const PlayerVideoItem = ({ item, isActive, isPaused, isScreenFocused, styles, on
         const duration = player.duration;
         if (duration > 0) setProgress(player.currentTime / duration);
       } catch (e) {
+
       }
     }, 200);
     return () => clearInterval(interval);
@@ -136,10 +138,7 @@ const PlayerVideoItem = ({ item, isActive, isPaused, isScreenFocused, styles, on
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.nameBadge}
-          onPress={() => router.push({
-            pathname: '/user/[id]',
-            params: { id: item.id, name: item.name, videoUrl: item.videoUrl, instrument: item.instrument },
-          })}
+          onPress={() => router.push({ pathname: '/user/[id]', params: { id: item.id } })}
         >
           <Text style={styles.handleText}>{item.handle}</Text>
         </TouchableOpacity>
@@ -529,7 +528,6 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     marginTop: -7,
     marginLeft: -7,
   },
-  
   modalOverlay: {
     flex: 1,
     justifyContent: 'flex-end',

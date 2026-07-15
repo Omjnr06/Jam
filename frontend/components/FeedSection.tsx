@@ -1,9 +1,11 @@
+// Reusable horizontal row used by the Hub screen — renders a section based on a diff category
 import React, { useMemo } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Theme } from '@/constants/theme';
 import { Artist } from '@/constants/mockHubSections';
+import InstrumentIcon from '@/components/IntsrumentIcon';
 
 interface FeedSectionProps {
   title: string;
@@ -35,7 +37,7 @@ const ArtistCard = ({ artist, theme, styles, contextKey }: ArtistCardProps) => (
     
     <View style={styles.cardHeader}>
       <Text style={styles.artistName}>{artist.name}</Text>
-      <FontAwesome5 name={artist.instrument} size={16} color={theme.textPrimary} />
+      <InstrumentIcon instrument={artist.instrument} size={16} color={theme.textPrimary} />
     </View>
 
     <View style={styles.tagRow}>

@@ -3,41 +3,30 @@ import { View, Modal, Text, StyleSheet, TouchableOpacity, TextInput, ActivityInd
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useThemeStore } from '@/store/useThemeStore';
-import { MOCK_USERS, UserClip } from '@/constants/mockUsers';
+import { MOCK_PEOPLE_BY_ID } from '@/constants/mockPeople';
 import ProfileHero, { JamStatus } from '@/components/ProfileHero';
-
-interface FallbackParams {
-  id?: string;
-  name?: string;
-  videoUrl?: string;
-  instrument?: string;
-}
 
 export default function UserProfileScreen() {
   const { theme } = useThemeStore();
-  const params = useLocalSearchParams() as FallbackParams;
-  const { id } = params;
+  const { id } = useLocalSearchParams() as { id: string };
+  const person = id ? MOCK_PEOPLE_BY_ID[id] : undefined;
 
-  const richProfile = id ? MOCK_USERS[id] : undefined;
-  const profile = richProfile ?? {
-    id: id ?? 'unknown',
-    name: params.name ?? 'Unknown Artist',
-    bio: '',
-    instruments: params.instrument ? [params.instrument] : ([] as string[]),
-    genres: [] as string[],
-    intents: [] as string[],
-    jamRequestStatus: 'none' as const,
-    featuredClip: {
-      id: 'fallback',
-      title: '',
-      tags: [],
-      thumbnail: '',
-      videoUrl: params.videoUrl ?? '',
-    },
-    otherClips: [] as UserClip[],
-  };
 
-  const [status, setStatus] = useState<JamStatus>(profile.jamRequestStatus);
+  if (!person) {
+    return (
+      <View style={[styles.notFoundContainer, { backgroundColor: theme.background }]}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.notFoundBack}>
+          <Ionicons name="chevron-back" size={26} color={theme.textPrimary} />
+        </TouchableOpacity>
+        <Text style={[styles.notFoundText, { color: theme.textSecondary }]}>Profile not found.</Text>
+      </View>
+    );
+  }
+
+  const featuredClip = person.clips[0];
+  const otherClips = person.clips.slice(1);
+
+  const [status, setStatus] = useState<JamStatus>(person.jamStatus);
   const [isJamModalVisible, setJamModalVisible] = useState(false);
   const [jamMessage, setJamMessage] = useState('');
   const [isSendingRequest, setIsSendingRequest] = useState(false);
@@ -58,9 +47,9 @@ export default function UserProfileScreen() {
   };
 
   const handleMoreOptions = () => {
-    Alert.alert(profile.name, undefined, [
-      { text: 'Report', style: 'destructive', onPress: () => Alert.alert('Reported', `${profile.name} has been reported.`) },
-      { text: 'Block', style: 'destructive', onPress: () => Alert.alert('Blocked', `${profile.name} has been blocked.`) },
+    Alert.alert(person.name, undefined, [
+      { text: 'Report', style: 'destructive', onPress: () => Alert.alert('Reported', `${person.name} has been reported.`) },
+      { text: 'Block', style: 'destructive', onPress: () => Alert.alert('Blocked', `${person.name} has been blocked.`) },
       { text: 'Cancel', style: 'cancel' },
     ]);
   };
@@ -69,29 +58,30 @@ export default function UserProfileScreen() {
     if (status === 'none') setJamModalVisible(true);
     if (status === 'incoming') {
       setStatus('accepted');
-      Alert.alert('Request Accepted', `You and ${profile.name} are now connected.`);
+      Alert.alert('Request Accepted', `You and ${person.name} are now connected.`);
     }
-    if (status === 'accepted') router.push({ pathname: '/messages/[id]', params: { id: profile.id } });
+    if (status === 'accepted') router.push({ pathname: '/messages/[id]', params: { id: person.id } });
   };
 
   return (
     <View style={{ flex: 1 }}>
       <ProfileHero
         theme={theme}
-        name={profile.name}
-        bio={profile.bio}
-        instruments={profile.instruments}
-        genres={profile.genres}
-        primaryIntent={profile.intents[0]}
+        name={person.name}
+        bio={person.bio}
+        location={person.location}
+        instruments={person.instruments}
+        genres={person.genres}
+        primaryIntent={person.intents[0]}
         isCurrentUser={false}
-        featuredVideoUrl={profile.featuredClip.videoUrl}
+        featuredVideoUrl={featuredClip.videoUrl}
         onBack={() => router.back()}
         onMoreOptions={handleMoreOptions}
         jamStatus={status}
         onJamAction={handleJamAction}
-        otherClips={profile.otherClips.map((c) => ({ id: c.id, thumbnail: c.thumbnail }))}
+        otherClips={otherClips.map((c) => ({ id: c.id, thumbnail: c.thumbnail }))}
         onClipPress={(clipId) =>
-          router.push({ pathname: '/player/[id]', params: { id: clipId, context: `profile-${profile.id}` } })
+          router.push({ pathname: '/player/[id]', params: { id: clipId, context: `profile-${person.id}` } })
         }
       />
 
@@ -130,6 +120,9 @@ export default function UserProfileScreen() {
 }
 
 const styles = StyleSheet.create({
+  notFoundContainer: { flex: 1, paddingTop: 55, paddingHorizontal: 20 },
+  notFoundBack: { marginBottom: 20 },
+  notFoundText: { fontFamily: 'Inter', fontSize: 15, textAlign: 'center', marginTop: 40 },
   modalOverlay: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.4)' },
   modalDismissArea: { flex: 1 },
   modalContent: { borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, minHeight: 300 },

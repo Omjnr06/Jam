@@ -7,6 +7,7 @@ import { useThemeStore } from '@/store/useThemeStore';
 import { useProfileStore } from '@/store/useProfileStore';
 import { Theme } from '@/constants/theme';
 import { ALL_INSTRUMENTS, ALL_GENRES, ALL_INTENTS } from '@/constants/pickerOptions';
+import { ALL_LOCATIONS } from '@/constants/mockPeople';
 import TagSelector from '@/components/TagSelector';
 
 export default function EditProfileScreen() {
@@ -17,6 +18,7 @@ export default function EditProfileScreen() {
   const [photo, setPhoto] = useState<string | null>(profile.photo);
   const [name, setName] = useState(profile.name);
   const [bio, setBio] = useState(profile.bio);
+  const [location, setLocation] = useState<string[]>(profile.location ? [profile.location] : []);
   const [instruments, setInstruments] = useState<string[]>(profile.instruments);
   const [genres, setGenres] = useState<string[]>(profile.genres);
   const [intents, setIntents] = useState<string[]>(profile.intents);
@@ -32,7 +34,7 @@ export default function EditProfileScreen() {
   };
 
   const handleSave = () => {
-    profile.setProfile({ photo, name, bio, instruments, genres, intents });
+    profile.setProfile({ photo, name, bio, location: location[0] ?? '', instruments, genres, intents });
     Alert.alert('Profile Updated', 'Your changes have been saved.', [
       { text: 'OK', onPress: () => router.back() },
     ]);
@@ -81,11 +83,23 @@ export default function EditProfileScreen() {
 
       <TagSelector
         theme={theme}
+        label="LOCATION"
+        masterList={ALL_LOCATIONS}
+        selected={location}
+        onChange={setLocation}
+        searchPlaceholder="Search or type your city/school..."
+        singleSelect
+        allowCustom
+      />
+
+      <TagSelector
+        theme={theme}
         label="INSTRUMENTS"
         masterList={ALL_INSTRUMENTS}
         selected={instruments}
         onChange={setInstruments}
         searchPlaceholder="Search instruments..."
+        showInstrumentIcons
       />
 
       <TagSelector

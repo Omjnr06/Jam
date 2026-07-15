@@ -13,31 +13,19 @@ import Animated, {
 } from 'react-native-reanimated';
 import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker'; 
-import { Camera, ArrowRight, Check, User, Guitar, Drum, MicVocal, Headphones, Piano, Music, Search, Plus } from 'lucide-react-native';
+import { Camera, ArrowRight, Check, User, Search, Plus } from 'lucide-react-native';
 import { useThemeStore } from '@/store/useThemeStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import { Theme } from '@/constants/theme';
 import { ALL_INSTRUMENTS, ALL_GENRES, ALL_INTENTS } from '@/constants/pickerOptions';
+import { ALL_LOCATIONS } from '@/constants/mockPeople';
+import InstrumentIcon from '@/components/IntsrumentIcon';
 
 const { width } = Dimensions.get('window');
 
-const INITIAL_INSTRUMENTS = ['Guitar', 'Drums', 'Vocals', 'Headphones', 'Piano'];
+const INITIAL_INSTRUMENTS = ['Guitar', 'Drums', 'Vocals', 'DJ', 'Piano'];
 const INITIAL_GENRES = ['Rock', 'Jazz', 'R&B', 'Indie', 'Metal', 'Pop', 'Funk'];
 const INTENTS = ALL_INTENTS;
-
-interface RenderIconProps {
-  name: string;
-  size: number;
-  color: string;
-}
-
-const RenderIcon = ({ name, size, color }: RenderIconProps) => {
-  if (name.includes('Guitar')) return <Guitar size={size} color={color} />;
-  if (name.includes('Drum')) return <Drum size={size} color={color} />;
-  if (name.includes('Vocal')) return <MicVocal size={size} color={color} />;
-  if (name.includes('Piano') || name.includes('Keyboard')) return <Piano size={size} color={color} />;
-  if (name === 'Headphones' || name === 'DJ' || name === 'Producer') return <Headphones size={size} color={color} />;
-  return <Music size={size} color={color} />;
-};
 
 interface OrbitingItemProps {
   item: string;
@@ -70,7 +58,7 @@ const OrbitingItem = ({ item, index, totalItems, rotation, instrumentList, theme
       {isInstrument ? (
         <View style={styles.orbitIconContainer}>
           <View style={styles.orbitItem}>
-            <RenderIcon name={item} size={18} color={theme.textPrimary} />
+            <InstrumentIcon instrument={item} size={18} color={theme.textPrimary} />
           </View>
           <Text style={styles.orbitIconLabel} numberOfLines={1}>{item}</Text>
         </View>
@@ -85,10 +73,15 @@ const OrbitingItem = ({ item, index, totalItems, rotation, instrumentList, theme
 
 export default function OnboardingScreen() {
   const { theme } = useThemeStore();
+  const setProfile = useProfileStore((s) => s.setProfile);
   const styles = useMemo(() => getStyles(theme), [theme]);
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [location, setLocation] = useState('');
+  const [availableLocations, setAvailableLocations] = useState<string[]>(ALL_LOCATIONS);
+  const [showOtherLocationInput, setShowOtherLocationInput] = useState(false);
+  const [locationSearch, setLocationSearch] = useState('');
   const [availableInstruments, setAvailableInstruments] = useState<string[]>(INITIAL_INSTRUMENTS);
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>([]);
   const [showOtherInput, setShowOtherInput] = useState(false);
@@ -137,8 +130,26 @@ export default function OnboardingScreen() {
     Keyboard.dismiss();
   };
 
+  const handleSelectCustomLocation = () => {
+    const custom = locationSearch.trim();
+    if (!custom) return;
+    setAvailableLocations((prev) => (prev.includes(custom) ? prev : [...prev, custom]));
+    setLocation(custom);
+    setLocationSearch('');
+    setShowOtherLocationInput(false);
+    Keyboard.dismiss();
+  };
+
   useEffect(() => {
-    if (step === 5) {
+    if (step === 6) {
+      setProfile({
+        name,
+        photo: profileImage,
+        location,
+        instruments: selectedInstruments,
+        genres: selectedGenres,
+        intents: selectedIntents,
+      });
       rotation.value = withRepeat(withTiming(2 * Math.PI, { duration: 10000, easing: Easing.linear }), -1, false);
       const timer = setTimeout(() => { router.replace('/(tabs)/hub'); }, 4500);
       return () => clearTimeout(timer);
@@ -175,7 +186,7 @@ export default function OnboardingScreen() {
         <Animated.View style={[styles.bubble, animatedStyle]}>
           {isIcon ? (
             <>
-              <RenderIcon name={item} size={24} color={isSelected ? theme.accent : theme.textPrimary} />
+              <InstrumentIcon instrument={item} size={24} color={isSelected ? theme.accent : theme.textPrimary} />
               <Text style={[styles.bubbleLabel, { color: isSelected ? theme.accent : theme.textPrimary }]} numberOfLines={1}>{item}</Text>
             </>
           ) : (
@@ -186,7 +197,7 @@ export default function OnboardingScreen() {
     );
   };
 
-  const combinedSelections = [...selectedInstruments, ...selectedGenres, ...selectedIntents];
+  const combinedSelections = [...(location ? [location] : []), ...selectedInstruments, ...selectedGenres, ...selectedIntents];
 
   return (
     <View style={styles.container}>
@@ -225,8 +236,59 @@ export default function OnboardingScreen() {
         </Animated.View>
       )}
 
-      {/* Instruments */}
+      {/* Location */}
       {step === 2 && (
+        <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.stepContainer}>
+          <Text style={styles.headerText}>Where are you?</Text>
+
+          <View style={styles.bubbleCloud}>
+            {availableLocations.map((loc) => (
+              <Bubble
+                key={loc} item={loc}
+                isSelected={location === loc}
+                onPress={() => setLocation(loc)}
+              />
+            ))}
+
+            {!showOtherLocationInput && (
+              <TouchableOpacity onPress={() => setShowOtherLocationInput(true)} activeOpacity={0.8}>
+                <View style={[styles.bubble, styles.otherBubble]}>
+                  <Search size={24} color={theme.textPrimary} />
+                  <Text style={styles.bubbleLabel}>Other</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          {showOtherLocationInput && (
+            <Animated.View entering={FadeIn} style={styles.autocompleteContainer}>
+              <View style={styles.searchContainer}>
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Type your city or school..."
+                  placeholderTextColor={theme.textSecondary}
+                  value={locationSearch}
+                  onChangeText={setLocationSearch}
+                  autoFocus
+                  returnKeyType="done"
+                  onSubmitEditing={handleSelectCustomLocation}
+                />
+              </View>
+            </Animated.View>
+          )}
+
+          <TouchableOpacity 
+            style={[styles.nextBtn, !location && { opacity: 0.5 }]} 
+            disabled={!location}
+            onPress={() => setStep(3)}
+          >
+            <ArrowRight size={20} color={theme.accent} />
+          </TouchableOpacity>
+        </Animated.View>
+      )}
+
+      {/* Instruments */}
+      {step === 3 && (
         <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.stepContainer}>
           <Text style={styles.headerText}>What do you play?</Text>
           
@@ -287,7 +349,7 @@ export default function OnboardingScreen() {
           <TouchableOpacity 
             style={[styles.nextBtn, selectedInstruments.length === 0 && { opacity: 0.5 }]} 
             disabled={selectedInstruments.length === 0}
-            onPress={() => setStep(3)}
+            onPress={() => setStep(4)}
           >
             <ArrowRight size={20} color={theme.accent} />
           </TouchableOpacity>
@@ -295,7 +357,7 @@ export default function OnboardingScreen() {
       )}
 
       {/* Genre */}
-      {step === 3 && (
+      {step === 4 && (
         <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.stepContainer}>
           <Text style={styles.headerText}>Your Vibe?</Text>
           
@@ -356,7 +418,7 @@ export default function OnboardingScreen() {
           <TouchableOpacity 
             style={[styles.nextBtn, selectedGenres.length === 0 && { opacity: 0.5 }]} 
             disabled={selectedGenres.length === 0}
-            onPress={() => setStep(4)}
+            onPress={() => setStep(5)}
           >
             <ArrowRight size={20} color={theme.accent} />
           </TouchableOpacity>
@@ -364,7 +426,7 @@ export default function OnboardingScreen() {
       )}
 
       {/* Intent */}
-      {step === 4 && (
+      {step === 5 && (
         <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.stepContainer}>
           <Text style={styles.headerText}>Looking for?</Text>
           <View style={styles.bubbleCloud}>
@@ -379,7 +441,7 @@ export default function OnboardingScreen() {
           <TouchableOpacity 
             style={[styles.nextBtn, selectedIntents.length === 0 && { opacity: 0.5 }]} 
             disabled={selectedIntents.length === 0}
-            onPress={() => setStep(5)}
+            onPress={() => setStep(6)}
           >
             <Check size={20} color={theme.accent} />
           </TouchableOpacity>
@@ -387,7 +449,7 @@ export default function OnboardingScreen() {
       )}
 
       {/* Final Message */}
-      {step === 5 && (
+      {step === 6 && (
         <Animated.View entering={FadeIn.duration(1000)} style={styles.orbitContainer}>
           <Text style={styles.welcomeText}>Welcome to the Jam Session, {name}.</Text>
 

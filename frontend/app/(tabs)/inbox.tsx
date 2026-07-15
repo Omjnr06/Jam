@@ -1,3 +1,7 @@
+// The Inbox tab — three-way split (Accepted / Pending / Sent). Starts
+// from MOCK_CONVERSATIONS (derived from MOCK_PEOPLE) but copies it into
+// local state so Accept/Decline can mutate it without touching the mock
+// source data itself.
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import { router } from 'expo-router';

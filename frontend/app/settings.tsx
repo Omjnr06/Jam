@@ -3,16 +3,25 @@ import { View, Text, StyleSheet, TouchableOpacity, Switch, Alert } from 'react-n
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useThemeStore } from '@/store/useThemeStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import { Theme } from '@/constants/theme';
 
 export default function SettingsScreen() {
   const { theme, isDark, toggleTheme } = useThemeStore();
+  const resetProfile = useProfileStore((s) => s.resetProfile);
   const styles = useMemo(() => getStyles(theme), [theme]);
 
   const handleLogOut = () => {
     Alert.alert('Log Out', 'Are you sure you want to log out?', [
       { text: 'Cancel', style: 'cancel' },
-      { text: 'Log Out', style: 'destructive', onPress: () => router.replace('/') },
+      {
+        text: 'Log Out',
+        style: 'destructive',
+        onPress: () => {
+          resetProfile();
+          router.replace('/');
+        },
+      },
     ]);
   };
 

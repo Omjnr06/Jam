@@ -1,17 +1,19 @@
 import React, { useMemo, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, Modal, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { VideoView } from 'expo-video';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useThemeStore } from '@/store/useThemeStore';
 import { useResumableVideoPlayer } from '@/hooks/useResumableVideoPlayer';
 import { Theme } from '@/constants/theme';
+const MAX_CLIP_DURATION_SECONDS = 90;
 
 export default function AddPostScreen() {
   const { theme } = useThemeStore();
   const styles = useMemo(() => getStyles(theme), [theme]);
 
   const [videoUri, setVideoUri] = useState<string | null>(null);
+  const [isCompressing, setIsCompressing] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [originalBy, setOriginalBy] = useState('');
@@ -25,13 +27,32 @@ export default function AddPostScreen() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       quality: 1,
+      videoMaxDuration: MAX_CLIP_DURATION_SECONDS,
     });
-    if (!result.canceled) setVideoUri(result.assets[0].uri);
+    if (result.canceled) return;
+
+    const asset = result.assets[0];
+    const durationSeconds = (asset.duration ?? 0) / 1000;
+
+    if (durationSeconds > MAX_CLIP_DURATION_SECONDS) {
+      Alert.alert(
+        'Clip Too Long',
+        `Clips must be ${MAX_CLIP_DURATION_SECONDS} seconds or under. This one is ${Math.round(durationSeconds)}s — trim it and try again.`
+      );
+      return;
+    }
+
+    setIsCompressing(true);
+    setTimeout(() => {
+      setIsCompressing(false);
+      setVideoUri(asset.uri);
+    }, 1800);
   };
 
   const handlePost = () => {
     if (!videoUri || !title.trim()) return;
     setIsPosting(true);
+
     setTimeout(() => {
       setIsPosting(false);
       setPosted(true);
@@ -50,16 +71,25 @@ export default function AddPostScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <Text style={styles.headerText}>New Clip</Text>
 
-      <TouchableOpacity style={styles.videoPicker} onPress={pickVideo}>
+      <TouchableOpacity style={styles.videoPicker} onPress={pickVideo} disabled={isCompressing}>
         {videoUri ? (
           <VideoView player={player} style={styles.videoPreview} contentFit="cover" nativeControls={false} />
         ) : (
           <>
             <FontAwesome5 name="video" size={32} color={theme.textSecondary} />
             <Text style={styles.pickerText}>SELECT A CLIP</Text>
+            <Text style={styles.pickerSubtext}>Up to {MAX_CLIP_DURATION_SECONDS} seconds</Text>
           </>
         )}
       </TouchableOpacity>
+
+      <Modal visible={isCompressing} transparent={false} animationType="fade">
+        <View style={styles.compressingOverlay}>
+          <ActivityIndicator size="large" color="#E1DCC9" />
+          <Text style={styles.compressingTitle}>Compressing your clip...</Text>
+          <Text style={styles.compressingSubtext}>Please don't close the app.</Text>
+        </View>
+      </Modal>
 
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>TITLE</Text>
@@ -163,6 +193,34 @@ const getStyles = (theme: Theme) => StyleSheet.create({
     color: theme.textSecondary,
     fontWeight: 'bold',
     marginTop: 10,
+  },
+  pickerSubtext: {
+    fontFamily: 'Inter',
+    fontSize: 11,
+    color: theme.textSecondary,
+    marginTop: 4,
+    opacity: 0.8,
+  },
+  compressingOverlay: {
+    flex: 1,
+    backgroundColor: '#050505',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+  },
+  compressingTitle: {
+    fontFamily: 'Bitcount',
+    fontSize: 22,
+    color: '#FFFFFF',
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  compressingSubtext: {
+    fontFamily: 'Inter',
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.7)',
+    marginTop: 8,
+    textAlign: 'center',
   },
   fieldGroup: {
     marginBottom: 20,
