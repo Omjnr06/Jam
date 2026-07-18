@@ -15,7 +15,7 @@ export const MOCK_MY_CLIPS: MyClip[] = [
     description: 'Recorded live in one take, testing a new pedal setup.',
     tags: ['#RnB', '#Cover'],
     thumbnail: 'https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80',
-    videoUrl: 'https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov',
+    videoUrl: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
   },
   {
     id: '2',
@@ -23,7 +23,7 @@ export const MOCK_MY_CLIPS: MyClip[] = [
     description: 'Working through a new original, first draft of the hook.',
     tags: ['#Original', '#Studio'],
     thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80',
-    videoUrl: 'https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4',
+    videoUrl: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
   },
   {
     id: '3',
@@ -31,6 +31,6 @@ export const MOCK_MY_CLIPS: MyClip[] = [
     description: undefined,
     tags: ['#Acoustic', '#LiveSet'],
     thumbnail: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80',
-    videoUrl: 'https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4',
+    videoUrl: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
   },
 ];

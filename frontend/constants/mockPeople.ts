@@ -49,7 +49,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["trending"],
     clips: [
-      { id: "1-1", title: "Jam Session on Creep by Radiohead", description: "Slowed it down and added a little more space in the chorus.", tags: ["#Jazz", "#Gigs", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4" },
+      { id: "1-1", title: "Jam Session on Creep by Radiohead", description: "Slowed it down and added a little more space in the chorus.", tags: ["#Jazz", "#Gigs", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -66,7 +66,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["trending"],
     clips: [
-      { id: "2-1", title: "Late Night Riff Session", description: "Testing a new pedal chain, still dialing in the tone.", tags: ["#Rock", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov" },
+      { id: "2-1", title: "Late Night Riff Session", description: "Testing a new pedal chain, still dialing in the tone.", tags: ["#Rock", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -83,7 +83,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["trending"],
     clips: [
-      { id: "3-1", title: "Pocket Groove Warmup", tags: ["#Funk", "#Session"], thumbnail: "https://images.unsplash.com/photo-1543791939-95a9829fcdcb?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4" },
+      { id: "3-1", title: "Pocket Groove Warmup", tags: ["#Funk", "#Session"], thumbnail: "https://images.unsplash.com/photo-1543791939-95a9829fcdcb?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -100,7 +100,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["recommended"],
     clips: [
-      { id: "4-1", title: "Indie Riff Sketch", description: "Working on a new song idea, feedback welcome.", tags: ["#Indie", "#Gigs", "#Compton"], thumbnail: "https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4" },
+      { id: "4-1", title: "Indie Riff Sketch", description: "Working on a new song idea, feedback welcome.", tags: ["#Indie", "#Gigs", "#Compton"], thumbnail: "https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -117,7 +117,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["recommended"],
     clips: [
-      { id: "5-1", title: "R&B Vocal Run Practice", tags: ["#R&B", "#Pro", "#LA"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4" },
+      { id: "5-1", title: "R&B Vocal Run Practice", tags: ["#R&B", "#Pro", "#LA"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -134,7 +134,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["local"],
     clips: [
-      { id: "6-1", title: "Front Porch Acoustic", description: "Just messing around with an open tuning.", tags: ["#Acoustic", "#1 Mile Away"], thumbnail: "https://images.unsplash.com/photo-1604004555489-723a93d6ce74?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov" },
+      { id: "6-1", title: "Front Porch Acoustic", description: "Just messing around with an open tuning.", tags: ["#Acoustic", "#1 Mile Away"], thumbnail: "https://images.unsplash.com/photo-1604004555489-723a93d6ce74?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -151,7 +151,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["local"],
     clips: [
-      { id: "7-1", title: "Metal Practice Pad Session", tags: ["#Metal", "#3 Miles Away"], thumbnail: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4" },
+      { id: "7-1", title: "Metal Practice Pad Session", tags: ["#Metal", "#3 Miles Away"], thumbnail: "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -168,7 +168,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["seeking"],
     clips: [
-      { id: "8-1", title: "Looking for Our Missing Piece", description: "We need a singer for our Thursday sessions, DM if interested.", tags: ["#Needs Singer", "#Gigs"], thumbnail: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4" },
+      { id: "8-1", title: "Looking for Our Missing Piece", description: "We need a singer for our Thursday sessions, DM if interested.", tags: ["#Needs Singer", "#Gigs"], thumbnail: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -185,7 +185,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "none",
     hubSections: ["seeking"],
     clips: [
-      { id: "9-1", title: "Studio Warmup, Need a Bassist", tags: ["#Needs Bassist", "#Studio"], thumbnail: "https://images.unsplash.com/photo-1525362081669-2b476bb628c3?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov" },
+      { id: "9-1", title: "Studio Warmup, Need a Bassist", tags: ["#Needs Bassist", "#Studio"], thumbnail: "https://images.unsplash.com/photo-1525362081669-2b476bb628c3?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -202,8 +202,8 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "accepted",
     hubSections: [],
     clips: [
-      { id: "10-1", title: "Live at the Show This Weekend", description: "Opening set, first time playing this room.", tags: ["#Live", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov" },
-      { id: "10-2", title: "Warmup Riffs", tags: ["#Practice"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4" },
+      { id: "10-1", title: "Live at the Show This Weekend", description: "Opening set, first time playing this room.", tags: ["#Live", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
+      { id: "10-2", title: "Warmup Riffs", tags: ["#Practice"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
     messages: [
       { id: "m1", senderId: "10", text: "Yo pull up to my show this weekend", timestamp: "10:02 AM" },
@@ -225,8 +225,8 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "accepted",
     hubSections: [],
     clips: [
-      { id: "11-1", title: "New Clips from the Studio", description: "Rough vocal take, still deciding on the bridge.", tags: ["#Studio", "#Original"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov" },
-      { id: "11-2", title: "Acapella Snippet", tags: ["#Acapella"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4" },
+      { id: "11-1", title: "New Clips from the Studio", description: "Rough vocal take, still deciding on the bridge.", tags: ["#Studio", "#Original"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
+      { id: "11-2", title: "Acapella Snippet", tags: ["#Acapella"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
     messages: [
       { id: "m1", senderId: "11", text: "Hi, come check out my clips", timestamp: "Yesterday" },
@@ -247,8 +247,8 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "accepted",
     hubSections: [],
     clips: [
-      { id: "12-1", title: "Toronto Slide-Through Set", description: "Full band, first take, minimal editing.", tags: ["#Funk", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4" },
-      { id: "12-2", title: "Slap Bass Practice", tags: ["#Practice"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4" },
+      { id: "12-1", title: "Toronto Slide-Through Set", description: "Full band, first take, minimal editing.", tags: ["#Funk", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
+      { id: "12-2", title: "Slap Bass Practice", tags: ["#Practice"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
     messages: [
       { id: "m1", senderId: "12", text: "Yo slide through Toronto sometime", timestamp: "Mon" },
@@ -270,8 +270,8 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "accepted",
     hubSections: [],
     clips: [
-      { id: "13-1", title: "Session Ideas", tags: ["#Session"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4" },
-      { id: "13-2", title: "Groove Practice", tags: ["#Practice"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov" },
+      { id: "13-1", title: "Session Ideas", tags: ["#Session"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
+      { id: "13-2", title: "Groove Practice", tags: ["#Practice"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
     messages: [
       { id: "m1", senderId: "13", text: "We should link for a session", timestamp: "Sun" },
@@ -292,7 +292,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "incoming",
     hubSections: [],
     clips: [
-      { id: "14-1", title: "Jazz Bar Downtown Friday?", tags: ["#Jazz", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4" },
+      { id: "14-1", title: "Jazz Bar Downtown Friday?", tags: ["#Jazz", "#Toronto"], thumbnail: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -309,7 +309,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "incoming",
     hubSections: [],
     clips: [
-      { id: "15-1", title: "Come Jam with Me at Church", tags: ["#Gospel"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/best-part-guitar.mov" },
+      { id: "15-1", title: "Come Jam with Me at Church", tags: ["#Gospel"], thumbnail: "https://images.unsplash.com/photo-1493225457124-a1a2a5f56468?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -326,7 +326,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "sent",
     hubSections: [],
     clips: [
-      { id: "16-1", title: "Studio Session This Weekend?", tags: ["#Studio"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/ironwood-drums.MP4" },
+      { id: "16-1", title: "Studio Session This Weekend?", tags: ["#Studio"], thumbnail: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
   {
@@ -343,7 +343,7 @@ export const MOCK_PEOPLE: Person[] = [
     jamStatus: "sent",
     hubSections: [],
     clips: [
-      { id: "17-1", title: "Loved Your Last Clip, Let's Connect", tags: ["#Indie"], thumbnail: "https://images.unsplash.com/photo-1525362081669-2b476bb628c3?w=400&q=80", videoUrl: "https://cgfgtbyzpztzfuqdqnzh.supabase.co/storage/v1/object/public/portfolio-media/RappKnishSnitches-guitar.mp4" },
+      { id: "17-1", title: "Loved Your Last Clip, Let's Connect", tags: ["#Indie"], thumbnail: "https://images.unsplash.com/photo-1525362081669-2b476bb628c3?w=400&q=80", videoUrl: "https://media.w3.org/2010/05/bunny/trailer.mp4" },
     ],
   },
 ];
